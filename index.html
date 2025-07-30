@@ -4,49 +4,137 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>DataLeak Detect</title>
-  <link rel="stylesheet" href="style.css" />
-  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500&family=Open+Sans&display=swap" rel="stylesheet">
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(135deg, #020b1f, #0a1a3a);
+      color: #fff;
+      overflow-x: hidden;
+      position: relative;
+    }
+
+    .background {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      background: url('https://www.transparenttextures.com/patterns/stardust.png');
+      z-index: 0;
+      animation: float 100s linear infinite;
+      opacity: 0.2;
+    }
+
+    @keyframes float {
+      from { background-position: 0 0; }
+      to { background-position: 2000px 2000px; }
+    }
+
+    .container {
+      position: relative;
+      z-index: 1;
+      text-align: center;
+      padding: 100px 20px;
+    }
+
+    h1 {
+      font-size: 3em;
+      color: #00aaff;
+      margin-bottom: 10px;
+    }
+
+    p {
+      font-size: 1.2em;
+      margin-bottom: 30px;
+      color: #ccc;
+    }
+
+    input[type="text"] {
+      padding: 12px;
+      font-size: 1em;
+      width: 60%;
+      max-width: 400px;
+      border-radius: 5px;
+      border: none;
+      margin-bottom: 20px;
+      outline: none;
+    }
+
+    button {
+      padding: 12px 25px;
+      font-size: 1em;
+      background: #0077cc;
+      border: none;
+      border-radius: 5px;
+      color: white;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+
+    button:hover {
+      background: #005999;
+    }
+
+    .result {
+      margin-top: 30px;
+      font-size: 1.2em;
+      font-weight: bold;
+      color: #00ffaa;
+    }
+
+    footer {
+      margin-top: 100px;
+      padding: 20px;
+      background: rgba(0, 0, 0, 0.3);
+      color: #ccc;
+      font-size: 0.95em;
+      border-top: 1px solid #333;
+    }
+  </style>
 </head>
 <body>
-  <div id="particles-js"></div>
+  <div class="background"></div>
 
-  <header>
-    <h1>🔍 DataLeak Detect</h1>
-    <p>Check if your credentials have been exposed in public data breaches</p>
-  </header>
+  <div class="container">
+    <h1>DataLeak Detect</h1>
+    <p>Enter your email or username to check for public data leaks</p>
 
-  <main>
-    <div class="scanner">
-      <input type="text" id="userInput" placeholder="Enter your email or username..." />
-      <button onclick="scanBreach()">Scan</button>
-    </div>
-    <div id="result" class="result"></div>
-  </main>
+    <input type="text" id="userInput" placeholder="example@email.com" />
+    <br />
+    <button onclick="scanInput()">Scan</button>
+
+    <div class="result" id="resultArea"></div>
+  </div>
 
   <footer>
-    <p>Made by Tolulope for Stack Security ©2025</p>
+    Made by Tolulope for Stack Security ©2025
   </footer>
 
-  <script src="script.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/particles.js"></script>
   <script>
-    particlesJS("particles-js", {
-      particles: {
-        number: { value: 80, density: { enable: true, value_area: 800 } },
-        color: { value: "#00aaff" },
-        shape: { type: "circle" },
-        opacity: { value: 0.5 },
-        size: { value: 3 },
-        move: { enable: true, speed: 2 }
-      },
-      interactivity: {
-        events: {
-          onhover: { enable: true, mode: "grab" },
-          onclick: { enable: true, mode: "push" }
+    function scanInput() {
+      const input = document.getElementById('userInput').value.trim();
+      const result = document.getElementById('resultArea');
+      result.innerHTML = "";
+
+      if (!input) {
+        result.style.color = "#ff4444";
+        result.textContent = "Please enter a valid email or username.";
+        return;
+      }
+
+      // Simulate scan with random result
+      const breached = Math.random() < 0.5;
+
+      setTimeout(() => {
+        if (breached) {
+          result.style.color = "#ff5555";
+          result.textContent = `⚠️ Oh no! ${input} was found in a public data breach.`;
+        } else {
+          result.style.color = "#00ffaa";
+          result.textContent = `✅ Good news! ${input} was not found in any known data breach.`;
         }
-      },
-      retina_detect: true
-    });
+      }, 1200);
+    }
   </script>
 </body>
 </html>
