@@ -7,20 +7,24 @@
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <header>
-    <h1>DataLeak Detect</h1>
-    <p>Check if your email or username has been exposed in known data breaches</p>
-  </header>
+  <!-- Floating Background -->
+  <div id="particles"></div>
 
   <div class="container">
-    <form id="leakForm">
-      <label for="inputField">Enter Email or Username:</label>
-      <input type="text" id="inputField" placeholder="e.g. johndoe@example.com" />
-      <button type="submit">Scan</button>
+    <div class="header">
+      <div class="logo-icon">🛡️</div>
+      <h1 class="title"><span>DataLeak Detect</span></h1>
+      <p class="subtitle">Scan & Secure Your Identity from Public Breaches</p>
+    </div>
+
+    <form id="breachForm">
+      <input type="text" id="identifier" placeholder="Enter your email or username" required />
+      <button type="submit">🔎 Scan</button>
     </form>
+
     <div id="result"></div>
   </div>
 
-  <script src="script.js" defer></script>
+  <script src="script.js"></script>
 </body>
 </html>
