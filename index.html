@@ -7,24 +7,71 @@
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <!-- Floating Background -->
-  <div id="particles"></div>
+  <div id="particles-js"></div>
 
-  <div class="container">
-    <div class="header">
-      <div class="logo-icon">🛡️</div>
-      <h1 class="title"><span>DataLeak Detect</span></h1>
-      <p class="subtitle">Scan & Secure Your Identity from Public Breaches</p>
+  <header>
+    <h1>🔍 DataLeak Detect</h1>
+    <p class="tagline">Check if your data has been exposed in breaches</p>
+  </header>
+
+  <main>
+    <div class="scanner-box">
+      <input type="text" id="inputData" placeholder="Enter email or username..." />
+      <button onclick="scan()">Scan</button>
+      <div id="result"></div>
     </div>
+  </main>
 
-    <form id="breachForm">
-      <input type="text" id="identifier" placeholder="Enter your email or username" required />
-      <button type="submit">🔎 Scan</button>
-    </form>
+  <footer>
+    <p>Made by Tolulope</p>
+  </footer>
 
-    <div id="result"></div>
-  </div>
+  <!-- Particles Background Script -->
+  <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
+  <script>
+    particlesJS("particles-js", {
+      particles: {
+        number: { value: 80 },
+        color: { value: "#00cfff" },
+        shape: { type: "circle" },
+        opacity: { value: 0.5 },
+        size: { value: 3 },
+        move: { enable: true, speed: 1 }
+      },
+      interactivity: {
+        events: {
+          onhover: { enable: true, mode: "repulse" }
+        }
+      }
+    });
+  </script>
 
-  <script src="script.js"></script>
+  <!-- Main Scan Logic -->
+  <script>
+    function scan() {
+      const input = document.getElementById("inputData").value.trim();
+      const result = document.getElementById("result");
+
+      if (!input) {
+        result.innerHTML = "⚠️ Please enter an email or username.";
+        result.className = "warning";
+        return;
+      }
+
+      result.innerHTML = "⏳ Scanning...";
+      result.className = "";
+
+      setTimeout(() => {
+        const breached = Math.random() < 0.5; // Simulated breach check
+        if (breached) {
+          result.innerHTML = `⚠️ <strong>${input}</strong> was found in known breaches. Please change your credentials!`;
+          result.className = "breached";
+        } else {
+          result.innerHTML = `✅ <strong>${input}</strong> was NOT found in any known breach.`;
+          result.className = "safe";
+        }
+      }, 2000);
+    }
+  </script>
 </body>
 </html>
