@@ -1,90 +1,170 @@
-body {
-  margin: 0;
-  font-family: 'Open Sans', sans-serif;
-  background: linear-gradient(to right, #000000, #001f3f);
-  color: #ffffff;
-  overflow-x: hidden;
-  position: relative;
-}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>DataLeak Detect</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700&display=swap" rel="stylesheet">
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: 'Outfit', sans-serif;
+      background: linear-gradient(135deg, #020b1f, #0a1a3a);
+      color: #f2f2f2;
+      overflow-x: hidden;
+      position: relative;
+    }
 
-#particles-js {
-  position: fixed;
-  width: 100%;
-  height: 100%;
-  z-index: -1;
-}
+    .background {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      background: url('https://www.transparenttextures.com/patterns/stardust.png');
+      z-index: 0;
+      animation: float 120s linear infinite;
+      opacity: 0.15;
+    }
 
-header {
-  text-align: center;
-  padding: 4rem 1rem 2rem;
-  background: transparent;
-}
+    @keyframes float {
+      from { background-position: 0 0; }
+      to { background-position: 2000px 2000px; }
+    }
 
-header h1 {
-  font-family: 'Orbitron', sans-serif;
-  font-size: 3rem;
-  color: #00aaff;
-  margin-bottom: 0.5rem;
-}
+    .container {
+      position: relative;
+      z-index: 1;
+      text-align: center;
+      padding: 80px 20px;
+      max-width: 800px;
+      margin: auto;
+    }
 
-header p {
-  font-size: 1.1rem;
-  color: #cceeff;
-  max-width: 600px;
-  margin: auto;
-}
+    .logo {
+      font-size: 4em;
+      margin-bottom: 10px;
+      color: #00aaff;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 12px;
+    }
 
-main {
-  text-align: center;
-  margin-top: 2rem;
-  padding: 0 1rem;
-}
+    .logo i {
+      font-size: 1.2em;
+      color: #00d9ff;
+      filter: drop-shadow(0 0 8px #00d9ff);
+    }
 
-.scanner {
-  margin: 2rem auto;
-  max-width: 500px;
-  display: flex;
-  gap: 0.5rem;
-  flex-direction: column;
-}
+    p {
+      font-size: 1.15em;
+      margin-bottom: 40px;
+      color: #ccc;
+    }
 
-input[type="text"] {
-  padding: 0.8rem;
-  border-radius: 6px;
-  border: none;
-  font-size: 1rem;
-  width: 100%;
-  background-color: #111;
-  color: #00ddff;
-  box-shadow: 0 0 10px #005577;
-}
+    input[type="text"] {
+      padding: 14px;
+      font-size: 1em;
+      width: 60%;
+      max-width: 400px;
+      border-radius: 6px;
+      border: none;
+      margin-bottom: 20px;
+      outline: none;
+      background: #0f2445;
+      color: #fff;
+    }
 
-button {
-  padding: 0.8rem;
-  background-color: #005577;
-  color: white;
-  font-size: 1rem;
-  border: none;
-  border-radius: 6px;
-  cursor: pointer;
-  transition: background 0.3s ease;
-}
+    button {
+      padding: 12px 28px;
+      font-size: 1em;
+      background: #0077cc;
+      border: none;
+      border-radius: 6px;
+      color: white;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
 
-button:hover {
-  background-color: #0077aa;
-}
+    button:hover {
+      background: #005999;
+    }
 
-.result {
-  margin-top: 1.5rem;
-  font-size: 1.2rem;
-  color: #ffcc00;
-}
+    .result {
+      margin-top: 30px;
+      font-size: 1.2em;
+      font-weight: 600;
+      color: #00ffaa;
+    }
 
-footer {
-  text-align: center;
-  margin-top: 3rem;
-  padding: 1rem;
-  color: #999;
-  background: #000;
-  font-size: 0.9rem;
-}
+    footer {
+      margin-top: 100px;
+      padding: 18px;
+      background: rgba(0, 0, 0, 0.3);
+      color: #aaa;
+      font-size: 0.95em;
+      border-top: 1px solid #333;
+      text-align: center;
+    }
+
+    @media (max-width: 600px) {
+      .logo {
+        font-size: 2.5em;
+      }
+
+      input[type="text"] {
+        width: 85%;
+      }
+    }
+  </style>
+  <script src="https://kit.fontawesome.com/a2d0a6a58b.js" crossorigin="anonymous"></script>
+</head>
+<body>
+  <div class="background"></div>
+
+  <div class="container">
+    <div class="logo">
+      <i class="fas fa-shield-alt"></i> DataLeak Detect
+    </div>
+    <p>Enter your email or username to check for public data leaks</p>
+
+    <input type="text" id="userInput" placeholder="example@email.com" />
+    <br />
+    <button onclick="scanInput()">Scan</button>
+
+    <div class="result" id="resultArea"></div>
+  </div>
+
+  <footer>
+    Made by Tolulope for Stack Security ©2025
+  </footer>
+
+  <script>
+    function scanInput() {
+      const input = document.getElementById('userInput').value.trim();
+      const result = document.getElementById('resultArea');
+      result.innerHTML = "";
+
+      if (!input) {
+        result.style.color = "#ff4444";
+        result.textContent = "Please enter a valid email or username.";
+        return;
+      }
+
+      // Simulate scan result
+      const breached = Math.random() < 0.5;
+
+      setTimeout(() => {
+        if (breached) {
+          result.style.color = "#ff5555";
+          result.textContent = `⚠️ Oh no! ${input} was found in a public data breach.`;
+        } else {
+          result.style.color = "#00ffaa";
+          result.textContent = `✅ Good news! ${input} was not found in any known data breach.`;
+        }
+      }, 1000);
+    }
+  </script>
+</body>
+</html>
