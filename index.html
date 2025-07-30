@@ -4,74 +4,80 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>DataLeak Detect</title>
-  <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="style.css"/>
 </head>
 <body>
   <div id="particles-js"></div>
 
-  <header>
-    <h1>🔍 DataLeak Detect</h1>
-    <p class="tagline">Check if your data has been exposed in breaches</p>
+  <header class="header">
+    <h1 class="title">🔐 DataLeak Detect</h1>
+    <p class="subtitle">Check if your data has been exposed in a breach</p>
   </header>
 
-  <main>
-    <div class="scanner-box">
-      <input type="text" id="inputData" placeholder="Enter email or username..." />
-      <button onclick="scan()">Scan</button>
-      <div id="result"></div>
-    </div>
+  <main class="container">
+    <form id="breachForm">
+      <input type="text" id="inputValue" placeholder="Enter your email or username" required />
+      <button type="submit">Scan Now</button>
+    </form>
+    <div id="result"></div>
   </main>
 
-  <footer>
-    <p>Made by Tolulope</p>
+  <footer class="footer">
+    <div class="footer-content">
+      <p>✨ Made by <strong>Tolulope</strong> for <strong>Stack Security</strong> &copy;2025</p>
+    </div>
   </footer>
 
-  <!-- Particles Background Script -->
+  <!-- Particles Background -->
   <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
   <script>
-    particlesJS("particles-js", {
-      particles: {
-        number: { value: 80 },
-        color: { value: "#00cfff" },
-        shape: { type: "circle" },
-        opacity: { value: 0.5 },
-        size: { value: 3 },
-        move: { enable: true, speed: 1 }
+    particlesJS('particles-js', {
+      "particles": {
+        "number": { "value": 80 },
+        "color": { "value": "#00c8ff" },
+        "shape": { "type": "circle" },
+        "opacity": {
+          "value": 0.5,
+          "random": false
+        },
+        "size": {
+          "value": 3,
+          "random": true
+        },
+        "move": {
+          "enable": true,
+          "speed": 2
+        }
       },
-      interactivity: {
-        events: {
-          onhover: { enable: true, mode: "repulse" }
+      "interactivity": {
+        "events": {
+          "onhover": { "enable": true, "mode": "grab" },
+          "onclick": { "enable": true, "mode": "push" }
         }
       }
     });
   </script>
 
-  <!-- Main Scan Logic -->
+  <!-- App Logic -->
   <script>
-    function scan() {
-      const input = document.getElementById("inputData").value.trim();
-      const result = document.getElementById("result");
+    document.getElementById('breachForm').addEventListener('submit', function (e) {
+      e.preventDefault();
+      const input = document.getElementById('inputValue').value.trim();
+      const resultDiv = document.getElementById('result');
 
       if (!input) {
-        result.innerHTML = "⚠️ Please enter an email or username.";
-        result.className = "warning";
+        resultDiv.innerHTML = '<p class="error">Please enter a valid email or username.</p>';
         return;
       }
 
-      result.innerHTML = "⏳ Scanning...";
-      result.className = "";
+      // Fake breach data simulation
+      const breached = ["user123", "email@example.com", "admin", "tolu", "stacklimited"];
+      const found = breached.includes(input.toLowerCase());
 
-      setTimeout(() => {
-        const breached = Math.random() < 0.5; // Simulated breach check
-        if (breached) {
-          result.innerHTML = `⚠️ <strong>${input}</strong> was found in known breaches. Please change your credentials!`;
-          result.className = "breached";
-        } else {
-          result.innerHTML = `✅ <strong>${input}</strong> was NOT found in any known breach.`;
-          result.className = "safe";
-        }
-      }, 2000);
-    }
+      resultDiv.innerHTML = found
+        ? `<p class="breach">⚠️ Oh no! <strong>${input}</strong> was found in a known data breach.</p>`
+        : `<p class="safe">✅ Good news! <strong>${input}</strong> was not found in known breaches.</p>`;
+    });
   </script>
 </body>
 </html>
