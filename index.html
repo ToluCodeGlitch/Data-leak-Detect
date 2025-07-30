@@ -4,74 +4,48 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>DataLeak Detect</title>
-  <link rel="stylesheet" href="style.css">
-  <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
+  <link rel="stylesheet" href="style.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500&family=Open+Sans&display=swap" rel="stylesheet">
 </head>
 <body>
   <div id="particles-js"></div>
 
-  <header class="header">
-    <h1 class="title">DataLeak<br>Detect</h1>
-    <p class="subtitle">Check if your email or username has been exposed in known data breaches</p>
+  <header>
+    <h1>🔍 DataLeak Detect</h1>
+    <p>Check if your credentials have been exposed in public data breaches</p>
   </header>
 
-  <main class="container">
-    <form id="breachForm">
-      <label for="inputValue"><strong>Enter Email or Username:</strong></label>
-      <input type="text" id="inputValue" placeholder="e.g. johndoe@example.com" />
-      <button type="submit">Scan</button>
-    </form>
-    <div id="result"></div>
+  <main>
+    <div class="scanner">
+      <input type="text" id="userInput" placeholder="Enter your email or username..." />
+      <button onclick="scanBreach()">Scan</button>
+    </div>
+    <div id="result" class="result"></div>
   </main>
 
-  <footer class="footer">
-    <div class="footer-content">Made by <strong>Tolulope</strong> for <strong>Stack Security</strong> ©2025</div>
+  <footer>
+    <p>Made by Tolulope for Stack Security ©2025</p>
   </footer>
 
+  <script src="script.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/particles.js"></script>
   <script>
-    // Particle Background
     particlesJS("particles-js", {
       particles: {
-        number: { value: 60 },
-        color: { value: "#3399ff" },
+        number: { value: 80, density: { enable: true, value_area: 800 } },
+        color: { value: "#00aaff" },
         shape: { type: "circle" },
-        opacity: { value: 0.4 },
+        opacity: { value: 0.5 },
         size: { value: 3 },
-        line_linked: {
-          enable: true,
-          distance: 150,
-          color: "#3399ff",
-          opacity: 0.3,
-          width: 1
-        },
-        move: {
-          enable: true,
-          speed: 2
+        move: { enable: true, speed: 2 }
+      },
+      interactivity: {
+        events: {
+          onhover: { enable: true, mode: "grab" },
+          onclick: { enable: true, mode: "push" }
         }
-      }
-    });
-
-    // Form scan logic
-    const form = document.getElementById("breachForm");
-    const input = document.getElementById("inputValue");
-    const result = document.getElementById("result");
-
-    form.addEventListener("submit", (e) => {
-      e.preventDefault();
-      const value = input.value.trim();
-
-      if (!value) {
-        result.innerHTML = "<p class='error'>⚠️ Please enter an email or username.</p>";
-        return;
-      }
-
-      // Simulated breach check (replace with real API later)
-      const breachedAccounts = ["test@example.com", "admin", "password123"];
-      const isBreached = breachedAccounts.includes(value.toLowerCase());
-
-      result.innerHTML = isBreached
-        ? `<p class="breach">⚠️ Oh no! <strong>${value}</strong> was found in a data breach.</p>`
-        : `<p class="safe">✅ Good news! <strong>${value}</strong> was not found in any breach.</p>`;
+      },
+      retina_detect: true
     });
   </script>
 </body>
