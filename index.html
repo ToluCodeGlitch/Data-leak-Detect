@@ -5,31 +5,22 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>DataLeak Detect</title>
   <link rel="stylesheet" href="style.css" />
-  <script defer src="script.js"></script>
-  <link href="https://fonts.googleapis.com/css2?family=Orbitron&display=swap" rel="stylesheet">
 </head>
 <body>
+  <header>
+    <h1>DataLeak Detect</h1>
+    <p>Check if your email or username has been exposed in known data breaches</p>
+  </header>
+
   <div class="container">
-    <header>
-      <h1>🔍 DataLeak Detect</h1>
-      <p>Check if your email or username has been found in a data breach.</p>
-    </header>
-
-    <main>
-      <form id="scanForm">
-        <input type="text" id="inputField" placeholder="Enter email or username" required />
-        <button type="submit">Scan</button>
-      </form>
-
-      <div id="results" class="hidden">
-        <h2>Scan Results</h2>
-        <div id="output"></div>
-      </div>
-    </main>
-
-    <footer>
-      <p>&copy; 2025 DataLeak Detect | Crafted by Tolulope Oni</p>
-    </footer>
+    <form id="leakForm">
+      <label for="inputField">Enter Email or Username:</label>
+      <input type="text" id="inputField" placeholder="e.g. johndoe@example.com" />
+      <button type="submit">Scan</button>
+    </form>
+    <div id="result"></div>
   </div>
+
+  <script src="script.js" defer></script>
 </body>
 </html>
