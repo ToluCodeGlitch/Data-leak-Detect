@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>DataLeak Detect</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div id="particles-js"></div>
+
+  <div class="container">
+    <h1>🔍 DataLeak Detect</h1>
+    <p>Enter your email or username to see if your data has been exposed in known breaches.</p>
+
+    <div class="input-group">
+      <input type="text" id="userInput" placeholder="Enter email or username">
+      <button onclick="scan()">Scan Now</button>
+    </div>
+
+    <div id="result" class="result-box hidden"></div>
+    <div id="history" class="history-box hidden">
+      <h3>🕒 Last Check</h3>
+      <p id="lastCheck"></p>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
+  <script>
+    particlesJS.load('particles-js', 'particles.json');
+  </script>
+</body>
+</html>
