@@ -1,46 +1,32 @@
-function scan() {
-  const input = document.getElementById("userInput").value.trim();
-  const resultBox = document.getElementById("result");
-  const historyBox = document.getElementById("history");
-  const lastCheck = document.getElementById("lastCheck");
+const form = document.getElementById('checkForm');
+const input = document.getElementById('emailInput');
+const resultPanel = document.getElementById('result');
+const resultTitle = document.getElementById('resultTitle');
+const resultMessage = document.getElementById('resultMessage');
+const tips = document.getElementById('tips');
 
-  if (!input) {
-    resultBox.innerHTML = "⚠️ Please enter an email or username.";
-    resultBox.className = "result-box warning";
-    resultBox.classList.remove("hidden");
-    return;
+// Simulated breach database
+const fakeBreaches = ['user@example.com', 'test@leaked.com', 'hello@world.com'];
+
+form.addEventListener('submit', function (e) {
+  e.preventDefault();
+  const email = input.value.trim().toLowerCase();
+
+  // Simulate breach check
+  const breached = fakeBreaches.includes(email);
+
+  resultPanel.classList.remove('hidden');
+  if (breached) {
+    resultTitle.textContent = '⚠️ Data Found in Breach';
+    resultMessage.textContent = `${email} has been found in known breaches.`;
+    tips.classList.remove('hidden');
+  } else {
+    resultTitle.textContent = '✅ No Breach Detected';
+    resultMessage.textContent = `${email} appears to be safe — no known breaches.`;
+    tips.classList.add('hidden');
   }
 
-  // Simulate a scan
-  resultBox.innerHTML = "🔍 Scanning for breaches...";
-  resultBox.className = "result-box";
-  resultBox.classList.remove("hidden");
-
-  setTimeout(() => {
-    const found = Math.random() < 0.5; // Fake result
-
-    if (found) {
-      resultBox.innerHTML = `❌ Oh no! <strong>${input}</strong> was found in multiple data breaches. <br><br>👉 Change your password and enable 2FA.`;
-      resultBox.className = "result-box warning";
-    } else {
-      resultBox.innerHTML = `✅ Great news! <strong>${input}</strong> was not found in any major breaches.`;
-      resultBox.className = "result-box success";
-    }
-
-    // Save to history
-    localStorage.setItem("lastCheckedUser", input);
-    localStorage.setItem("lastCheckedResult", resultBox.innerHTML);
-
-    lastCheck.innerHTML = resultBox.innerHTML;
-    historyBox.classList.remove("hidden");
-  }, 2000);
-}
-
-// Load history
-window.onload = () => {
-  const last = localStorage.getItem("lastCheckedResult");
-  if (last) {
-    document.getElementById("lastCheck").innerHTML = last;
-    document.getElementById("history").classList.remove("hidden");
-  }
-};
+  // Save to localStorage
+  localStorage.setItem('lastChecked', email);
+  localStorage.setItem('wasBreached', breached);
+});
