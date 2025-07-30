@@ -1,32 +1,28 @@
-const form = document.getElementById('checkForm');
-const input = document.getElementById('emailInput');
-const resultPanel = document.getElementById('result');
-const resultTitle = document.getElementById('resultTitle');
-const resultMessage = document.getElementById('resultMessage');
-const tips = document.getElementById('tips');
-
-// Simulated breach database
-const fakeBreaches = ['user@example.com', 'test@leaked.com', 'hello@world.com'];
-
-form.addEventListener('submit', function (e) {
+document.getElementById('scanForm').addEventListener('submit', function (e) {
   e.preventDefault();
-  const email = input.value.trim().toLowerCase();
 
-  // Simulate breach check
-  const breached = fakeBreaches.includes(email);
+  const input = document.getElementById('inputField').value.trim();
+  const output = document.getElementById('output');
+  const results = document.getElementById('results');
 
-  resultPanel.classList.remove('hidden');
-  if (breached) {
-    resultTitle.textContent = '⚠️ Data Found in Breach';
-    resultMessage.textContent = `${email} has been found in known breaches.`;
-    tips.classList.remove('hidden');
-  } else {
-    resultTitle.textContent = '✅ No Breach Detected';
-    resultMessage.textContent = `${email} appears to be safe — no known breaches.`;
-    tips.classList.add('hidden');
-  }
+  if (!input) return;
 
-  // Save to localStorage
-  localStorage.setItem('lastChecked', email);
-  localStorage.setItem('wasBreached', breached);
+  // Simulated breach database
+  const breachedAccounts = [
+    'john@example.com',
+    'user123',
+    'admin@site.com',
+    'tolu007',
+    'anonymous',
+  ];
+
+  let found = breachedAccounts.includes(input.toLowerCase());
+
+  results.classList.remove('hidden');
+
+  output.innerHTML = found
+    ? `<strong style="color: #ff4d4d;">⚠️ Oh no! "${input}" was found in known data breaches.</strong>
+       <br>We recommend changing your password and enabling 2FA immediately.`
+    : `<strong style="color: #00ff99;">✅ Good news! "${input}" was not found in public breach records.</strong>
+       <br>Still, always use strong, unique passwords!`;
 });
