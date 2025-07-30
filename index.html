@@ -4,13 +4,15 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>DataLeak Detect</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700&display=swap" rel="stylesheet">
   <style>
     body {
       margin: 0;
       padding: 0;
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      font-family: 'Outfit', sans-serif;
       background: linear-gradient(135deg, #020b1f, #0a1a3a);
-      color: #fff;
+      color: #f2f2f2;
       overflow-x: hidden;
       position: relative;
     }
@@ -21,8 +23,8 @@
       height: 100%;
       background: url('https://www.transparenttextures.com/patterns/stardust.png');
       z-index: 0;
-      animation: float 100s linear infinite;
-      opacity: 0.2;
+      animation: float 120s linear infinite;
+      opacity: 0.15;
     }
 
     @keyframes float {
@@ -34,38 +36,52 @@
       position: relative;
       z-index: 1;
       text-align: center;
-      padding: 100px 20px;
+      padding: 80px 20px;
+      max-width: 800px;
+      margin: auto;
     }
 
-    h1 {
-      font-size: 3em;
-      color: #00aaff;
+    .logo {
+      font-size: 4em;
       margin-bottom: 10px;
+      color: #00aaff;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .logo i {
+      font-size: 1.2em;
+      color: #00d9ff;
+      filter: drop-shadow(0 0 8px #00d9ff);
     }
 
     p {
-      font-size: 1.2em;
-      margin-bottom: 30px;
+      font-size: 1.15em;
+      margin-bottom: 40px;
       color: #ccc;
     }
 
     input[type="text"] {
-      padding: 12px;
+      padding: 14px;
       font-size: 1em;
       width: 60%;
       max-width: 400px;
-      border-radius: 5px;
+      border-radius: 6px;
       border: none;
       margin-bottom: 20px;
       outline: none;
+      background: #0f2445;
+      color: #fff;
     }
 
     button {
-      padding: 12px 25px;
+      padding: 12px 28px;
       font-size: 1em;
       background: #0077cc;
       border: none;
-      border-radius: 5px;
+      border-radius: 6px;
       color: white;
       cursor: pointer;
       transition: background 0.3s;
@@ -78,25 +94,39 @@
     .result {
       margin-top: 30px;
       font-size: 1.2em;
-      font-weight: bold;
+      font-weight: 600;
       color: #00ffaa;
     }
 
     footer {
       margin-top: 100px;
-      padding: 20px;
+      padding: 18px;
       background: rgba(0, 0, 0, 0.3);
-      color: #ccc;
+      color: #aaa;
       font-size: 0.95em;
       border-top: 1px solid #333;
+      text-align: center;
+    }
+
+    @media (max-width: 600px) {
+      .logo {
+        font-size: 2.5em;
+      }
+
+      input[type="text"] {
+        width: 85%;
+      }
     }
   </style>
+  <script src="https://kit.fontawesome.com/a2d0a6a58b.js" crossorigin="anonymous"></script>
 </head>
 <body>
   <div class="background"></div>
 
   <div class="container">
-    <h1>DataLeak Detect</h1>
+    <div class="logo">
+      <i class="fas fa-shield-alt"></i> DataLeak Detect
+    </div>
     <p>Enter your email or username to check for public data leaks</p>
 
     <input type="text" id="userInput" placeholder="example@email.com" />
@@ -122,7 +152,7 @@
         return;
       }
 
-      // Simulate scan with random result
+      // Simulate scan result
       const breached = Math.random() < 0.5;
 
       setTimeout(() => {
@@ -133,7 +163,7 @@
           result.style.color = "#00ffaa";
           result.textContent = `✅ Good news! ${input} was not found in any known data breach.`;
         }
-      }, 1200);
+      }, 1000);
     }
   </script>
 </body>
