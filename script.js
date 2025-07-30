@@ -1,26 +1,31 @@
-document.addEventListener("DOMContentLoaded", () => {
-  const form = document.getElementById("leakForm");
-  const input = document.getElementById("inputField");
-  const result = document.getElementById("result");
+document.getElementById("breachForm").addEventListener("submit", function (e) {
+  e.preventDefault();
 
-  form.addEventListener("submit", function (e) {
-    e.preventDefault();
-    const query = input.value.trim();
+  const input = document.getElementById("identifier").value.trim();
+  const resultBox = document.getElementById("result");
 
-    if (query === "") {
-      result.innerHTML = "⚠️ Please enter an email or username.";
-      return;
+  if (input === "") {
+    resultBox.innerHTML = "<p>Please enter a valid email or username.</p>";
+    return;
+  }
+
+  // Simulated logic (real API can be added later)
+  resultBox.innerHTML = "<p>🔍 Scanning for breaches...</p>";
+
+  setTimeout(() => {
+    const simulatedBreaches = ["breach1.com", "leakdata.net", "compromised.org"];
+    const found = Math.random() < 0.5;
+
+    if (found) {
+      resultBox.innerHTML = `
+        <p><strong>⚠️ Breach Detected!</strong></p>
+        <ul>
+          ${simulatedBreaches.map(site => `<li>🔓 ${site}</li>`).join('')}
+        </ul>
+        <p>Please consider updating your passwords and using a password manager.</p>
+      `;
+    } else {
+      resultBox.innerHTML = "<p><strong>✅ No breaches found for this identifier.</strong></p>";
     }
-
-    result.innerHTML = "🔍 Scanning for breaches...";
-
-    // Simulated breach check (replace with API call if needed)
-    setTimeout(() => {
-      const isBreached = Math.random() > 0.5;
-
-      result.innerHTML = isBreached
-        ? `⚠️ <strong>${query}</strong> was found in known breaches. Please update your credentials.`
-        : `✅ <strong>${query}</strong> was not found in known breaches. Stay safe.`;
-    }, 2000);
-  });
+  }, 1800);
 });
